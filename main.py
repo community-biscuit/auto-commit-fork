@@ -4,7 +4,7 @@ from github import Github, Auth
 
 class Project:
 
-    gh = None
+    __gh = None
 
     @classmethod
     def main(cls):
@@ -15,10 +15,10 @@ class Project:
 
         screen = pygame.display.set_mode((1000, 200))
         clock = pygame.time.Clock()
-        screen.fill((225, 225, 225))
 
         while True:
 
+            screen.fill((225, 225, 225))
             events = pygame.event.get()
 
             # Feed it with events every frame
@@ -32,7 +32,7 @@ class Project:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     cls.__commit(textinput.value)
 
-            pygame.display.update()
+            pygame.display.flip()
             clock.tick(30)
 
     @classmethod
@@ -59,4 +59,4 @@ class Project:
         return output
 
 if __name__ == '__main__':
-    main()
+    Project.main()
