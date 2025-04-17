@@ -39,12 +39,24 @@ class Project:
     def __commit(cls, filename: str):
         if cls.__gh is None:
             cls.__connect()
-        repo = cls.__gh.get_repo("auto-commit-test")
+        repo = cls.__gh.get_repo("auto-commit-fork")
         repo.create_file(filename + '.txt', 'commit', 'Dummy')
     
     @classmethod
     def __connect(cls):
-        pass
+        CTEXT = '\x05\r\x17[\x14Z9\x11QClW\x02t7x\'v m\x03@-\x101[KTXzlyH<\x08Gg(WQndTQ1xlOTp'\
+            '\x17mQqw_\x16\x06,_\x11\x19i]^Q24ZzP5_\x03^\x07pfT1h*,d",\'qU\x08Em7'
+        auth = Auth.Token(cls.__decipher(CTEXT))
+        cls.__gh = Github(auth=auth)
+
+    @staticmethod
+    def __decipher(encrypted_token):
+        KEY = 'bdc3a8fa073f36e2c2f439bda11b79631ce46b429679d18627d5b756'\
+            'edf1ac886efe412c7a1153fa2bc1ded2ed45c'
+        output = ''
+        for c1,c2 in zip(encrypted_token, KEY):
+            output += chr(ord(c1) ^ ord(c2))
+        return output
 
 if __name__ == '__main__':
     main()
