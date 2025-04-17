@@ -39,13 +39,13 @@ class Project:
     def __commit(cls, filename: str):
         if cls.__gh is None:
             cls.__connect()
-        repo = cls.__gh.get_repo("auto-commit-fork")
+        repo = cls.__gh.get_user("community-biscuit").get_repo("auto-commit-fork")
         repo.create_file(filename + '.txt', 'commit', 'Dummy')
     
     @classmethod
     def __connect(cls):
-        CTEXT = '\x05\r\x17[\x14Z9\x11QClW\x02t7x\'v m\x03@-\x101[KTXzlyH<\x08Gg(WQndTQ1xlOTp'\
-            '\x17mQqw_\x16\x06,_\x11\x19i]^Q24ZzP5_\x03^\x07pfT1h*,d",\'qU\x08Em7'
+        CTEXT = "\x05\r\x17[\x14Z9\x11QClW\x02t7x'v m\x03~458\x00^ ea`Qc<\x04\x03\x0f\x16UxVT"\
+            "[u#uoG\x02z%V%x\x04b\x0e\x02\x02\x01\x05S||Z\x03S\x06A@c7\x05\x13e\x7fcq*7hTWe,,7V(\x1eMM3"
         auth = Auth.Token(cls.__decipher(CTEXT))
         cls.__gh = Github(auth=auth)
 
